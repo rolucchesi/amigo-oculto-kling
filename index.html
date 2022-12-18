@@ -18,6 +18,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="script.js" async defer></script>
   </head>
   <body>
@@ -66,13 +67,26 @@
           <h2 id="timer">60</h2>
         </div>
         <div class="col-12 col-md-9 play-screen">
-          <h2 class="timer-title">A palavra é:</h2>
-          <h3 class="palavra-atual">&nbsp</h3>
+
+          <h2 class="timer-title">Pergunta</h2>
+          <h3 class="palavra-atual">Sua Resposta</h3>
+
+          <!-- <h3 class="pergunta-atual">&nbsp</h3>-->
+
+            <!-- <form name="myForm" id="myForm">
+                <br>
+                <label for="fresposta">Insira resposta aqui</label>
+                <input type="text" id="fresposta" name="fresposta" value="10"><br><br>
+            </form> -->
+
+            <input type="text" id="fresposta" name="fresposta" value="teste"><br><br>
+
+
           <div id="div-btn-start" class="btn-word">
             <button id="btn-start" class="btn btn-light">Play</button>
           </div>
           <div id="div-btn-play" class="btn-word hidden">
-            <button id="btn-acerto" class="btn btn-light">Acerto</button>
+            <button type="submit" form="myForm" id="btn-acerto" class="btn btn-light">Enviar</button>
             <button id="btn-pular" class="btn btn-light">Pular</button>
             <!-- <button id="btn-pausar" class="btn btn-light">Pausar</button> -->
           </div>
@@ -81,15 +95,14 @@
             <span id="marcador-word-1" class="marcador-word">&nbsp</span>
             <span id="marcador-word-2" class="marcador-word">&nbsp</span>
             <span id="marcador-word-3" class="marcador-word">&nbsp</span>
-            <span id="marcador-word-4" class="marcador-word">&nbsp</span>
           </div>
         </div>
         <div class="col-12 col-md-9 win-screen hidden">
           <h1>Fim de Jogo!</h1>
           <h2>
-            Palavras certas: 3 <br />
-            Palavras erradas: 2
+            &nbsp
           </h2>
+          <h3> Como prêmio, você descobriu que meu amigo oculto é o VIÉGAS!!</h3>
         </div>
       </div>
     </div>

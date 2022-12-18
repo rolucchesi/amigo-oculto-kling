@@ -9,71 +9,41 @@ const palavraAtual = document.querySelector('.palavra-atual')
 const btnAcerto = document.querySelector('#btn-acerto')
 const btnPular = document.querySelector('#btn-pular')
 const btnPausar = document.querySelector('#btn-pausar')
+var respostaUsuario = document.getElementById('fresposta').value
+$(document).ready(function(){
+    $("#fresposta").change( function() {
+        respostaUsuario = $("#fresposta").val();
+        // alert($("#fresposta").val())
+    });
+});
+//const respostaUsuario = document.forms["myForm"]["fresposta"].value
+// function valorReposta(){
+//     var respostaUsuario = document.getElementById('fresposta').value;
+//     alert(respostaUsuario);
+// }
+//respostaUsuario.onchange = valorReposta;
+//respostaUsuario.onblur = valorReposta;
 let jogoIniciado = false
 let jogoPausado = false
 let palavraAleatoria
 const arrayPalavrasAtual = []
 const arrayAcertos = []
-const numPalavras = 5;
+const numPalavras = 4;
 let indexPalavraAtual = 0;
-const timeRodada = 45;
-let timeLeft = 45;
+const timeRodada = 60;
+let timeLeft = 60;
 let countdownTimer;
 let marcadorAtual = document.querySelector(`#marcador-word-${indexPalavraAtual}`)
 let marcadoresAll = document.querySelectorAll('.marcador-word')
 
-const listaPalavras = [
-    {word:'Banana',categoria:'fruta'},
-    {word:'Morango',categoria:'fruta'},
-    {word:'Maçã',categoria:'fruta'},
-    {word:'Limão',categoria:'fruta'},
-    {word:'Mamão',categoria:'fruta'},
-    {word:'Uva',categoria:'fruta'},
-
-    {word:'Correr',categoria:'ação'},
-    {word:'Pular',categoria:'ação'},
-    {word:'Comer',categoria:'ação'},
-    {word:'Viajar',categoria:'ação'},
-    {word:'Sonhar',categoria:'ação'},
-    {word:'Dormir',categoria:'ação'},
-    {word:'Chover',categoria:'ação'},
-    {word:'Lutar',categoria:'ação'},
-
-    {word:'Cachorro',categoria:'animal'},
-    {word:'Cobra',categoria:'animal'},
-    {word:'Macaco',categoria:'animal'},
-    {word:'Gato',categoria:'animal'},
-    {word:'Rinoceronte',categoria:'animal'},
-    {word:'Girafa',categoria:'animal'},
-
-    {word:'Mão',categoria:'corpo'},
-    {word:'Pé',categoria:'corpo'},
-    {word:'Cabeça',categoria:'corpo'},
-    {word:'Dedo',categoria:'corpo'},
-    {word:'Olho',categoria:'corpo'},
-    {word:'Braço',categoria:'corpo'},
-    {word:'Cotovelo',categoria:'corpo'},
-
-    {word:'Colher',categoria:'objeto'},
-    {word:'Balde',categoria:'objeto'},
-    {word:'Tesoura',categoria:'objeto'},
-    {word:'Garrafa',categoria:'objeto'},
-    {word:'Luva',categoria:'objeto'},
-    {word:'Sapato',categoria:'objeto'},
-    {word:'Meia',categoria:'objeto'},
-    {word:'Celular',categoria:'objeto'},
+const listaPerguntas = [
+    {word:'Qual ano do 1° amigo oculto?',categoria:'2011'},
+    {word:'Apelido do Vieguinhas',categoria:'Tilt'},
+    {word:'Sobremesa favorita do Alexandre',categoria:'Pudim'},
+    {word:'O que Matheus Ramos come no microondas',categoria:'Pedra'},
+    {word:'Nome do melhor grupo do mundo',categoria:'Kling'},
 ];
 
-// lista = fetch('file.json')
-//   .then(response => response.json())
-//   .then(jsonResponse => console.log(jsonResponse))
-
-// lista = fetch('file.txt')
-//   .then(response => response.text())
-//   .then(text => console.log(text))
-
-// console.log(lista.then())
-// console.log(lista)
 
 btnNew.addEventListener('click', function() {
     jogoIniciado = false;
@@ -108,14 +78,17 @@ btnStart.addEventListener('click',function() {
 })
 
 btnAcerto.addEventListener('click', function() {
-    arrayAcertos[indexPalavraAtual] = 'acerto'
-    if (!arrayAcertos.includes('neutro')) {
-        endGame()
-        return
+    if(validarResposta()){
+        arrayAcertos[indexPalavraAtual] = 'acerto'
+        if (!arrayAcertos.includes('neutro')) {
+            endGame()
+            return
+        }
+        marcadorAtual.style.backgroundColor = 'green'
+        // marcadorAtual.style.border = "0.5px solid";
+        passarProximaPalavra()
     }
-    marcadorAtual.style.backgroundColor = 'green'
-    // marcadorAtual.style.border = "0.5px solid";
-    passarProximaPalavra()
+
     
     // console.log(arrayAcertos)
 
@@ -131,15 +104,15 @@ btnPular.addEventListener('click', function() {
 })
 
 
-const gerarPalavraAleatoria = function () {
-    palavraAleatoria = listaPalavras[Math.trunc(Math.random() * listaPalavras.length)].word
+const gerarPalavraAleatoria = function (n) {
+    palavraAleatoria = listaPerguntas[n].word
    return arrayPalavrasAtual.includes(palavraAleatoria) ?  gerarPalavraAleatoria(): palavraAleatoria
 };
 
 const gerarArrayPalavras = function (n) {
     arrayPalavrasAtual.length = 0
     for (let i = 0;i<n;i++){
-        arrayPalavrasAtual.push(gerarPalavraAleatoria())
+        arrayPalavrasAtual.push(gerarPalavraAleatoria(i))
     }
 }
 
@@ -173,6 +146,14 @@ const passarProximaPalavra = function (){
     palavraAtual.textContent = arrayPalavrasAtual[indexPalavraAtual]
     marcadorAtual = document.querySelector(`#marcador-word-${indexPalavraAtual}`)
     marcadorAtual.style.border = "3px solid";
+}
+
+const validarResposta = function (){
+    //return 0
+    console.log(respostaUsuario)
+    console.log(listaPerguntas[indexPalavraAtual].categoria)
+    return (respostaUsuario === listaPerguntas[indexPalavraAtual].categoria)
+
 }
 
 function iniciarCronometro() {
